@@ -1,15 +1,14 @@
 {
   "name": "tiktok-live-game",
   "version": "1.0.0",
-  "description": "A game for TikTok live streaming interaction",
-  "main": "server.js",
+  "description": "",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js",
-    "dev": "nodemon server.js"
+    "start": "node server.js"
   },
-  "keywords": ["tiktok", "live", "game"],
-  "author": "Sidhanie",
+  "keywords": [],
+  "author": "",
   "license": "ISC",
   "dependencies": {
     "dotenv": "^16.3.1",
