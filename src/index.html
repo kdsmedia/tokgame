@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Tug of War | By Sdhanie</title>
+  <title>Tug of War | By Sidhanie</title>
   <style>
     * {
       margin: 0;
@@ -21,7 +21,7 @@
       background-size: cover !important;
       background-repeat: no-repeat;
     }
-
+    
     .competitors {
       max-width: 100%;
       max-height: 100%;
@@ -31,7 +31,6 @@
       transform: translate(-50%, -50%);
       z-index: 1;
     }
-
     .pool {
       max-width: 100%;
       max-height: 100%;
@@ -80,7 +79,6 @@
       z-index: 1;
       visibility: hidden;
     }
-
   </style>
 </head>
 <body>
@@ -104,7 +102,7 @@
         const blueCheer = document.getElementById('blueCheer');
 
         const movementDistance = 3;
-        let competitorsPosition = 57;
+        let competitorsPosition = 50; // Starting at 50% from the left
         let teamBlueStrength = 0;
         let teamRedStrength = 0;
 
@@ -154,12 +152,12 @@
             const redWInBoxObject = redWInBox.getBoundingClientRect();
             moveCompetitors();
 
-            if (competitorsObject.top <= blueWInBoxObject.bottom) {
+            if (competitorsObject.left <= blueWInBoxObject.right) {
                 clearInterval(loopPull);
                 replaceImage(pool, '/src/assets/redCompetitor/redFalling.gif', 130, 100);
                 replaceImage(competitors, '/src/assets/blueCompetitor/blueWon.png', 90, 90, '380px');
                 replaceImage(blueCheer, '/src/assets/blueCompetitor/blueCheerWon.gif', 810, 90, '', '-1%');
-            } else if (competitorsObject.bottom >= redWInBoxObject.top) {
+            } else if (competitorsObject.right >= redWInBoxObject.left) {
                 clearInterval(loopPull);
                 replaceImage(pool, '/src/assets/blueCompetitor/blueFalling.gif', 130, 100);
                 replaceImage(competitors, '/src/assets/redCompetitor/redWon.png', 90, 90, '650px');
@@ -168,12 +166,14 @@
         }
 
         function moveCompetitors() {
+            const competitorsStyle = window.getComputedStyle(competitors);
+            const currentLeft = parseFloat(competitorsStyle.left || '50%');
+            
             if (teamBlueStrength > teamRedStrength) {
-                competitorsPosition -= movementDistance;
+                competitors.style.left = `${currentLeft - movementDistance}%`;
             } else if (teamRedStrength > teamBlueStrength) {
-                competitorsPosition += movementDistance;
+                competitors.style.left = `${currentLeft + movementDistance}%`;
             }
-            competitors.style.top = `${competitorsPosition}%`;
         }
 
         function buffTeamBlue(buff) {
