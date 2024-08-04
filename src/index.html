@@ -16,9 +16,9 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      min-height: 30vh;
+      min-height: 100vh;
       background-image: url('https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiHSNmBPS7aUV310q6q1RG1gMdBmt2e07PSt8EBh-1ttMq1nDoA-O14NnANK43G3IB2gwLGOAdYZrg7uvU_SVNfhkrYQnoY2LWeb_xtygD688anB-7enD-JnKiQUY_7EemiHVTea_TYRHOQvhNAcOjJUIf2tkqpv4cODlmh1wUcgzzYlgjyiOkAyUe99V8/s1309/b52a3eba-66a4-472e-88bd-a2dfb746aacc.png');
-      background-size: cover !important;
+      background-size: cover;
       background-repeat: no-repeat;
     }
     
@@ -31,6 +31,7 @@
       transform: translate(-50%, -50%);
       z-index: 1;
     }
+
     .pool {
       max-width: 100%;
       max-height: 100%;
@@ -58,26 +59,24 @@
       z-index: 1;
     }
 
-    .blueWInBox {
+    .blueWInBox, .redWInBox {
       position: absolute;
-      top: 12%;
       height: 10%;
       width: 10%;
-      left: 45%;
-      background-color: blue;
       z-index: 1;
       visibility: hidden;
     }
 
+    .blueWInBox {
+      top: 12%;
+      left: 45%;
+      background-color: blue;
+    }
+
     .redWInBox {
-      position: absolute;
       bottom: 0;
-      height: 10%;
-      width: 10%;
       left: 45%;
       background-color: red;
-      z-index: 1;
-      visibility: hidden;
     }
   </style>
 </head>
@@ -91,9 +90,7 @@
 
   <script>
     document.addEventListener("DOMContentLoaded", function() {
-        // Sesuaikan URL WebSocket jika perlu
         const ws = new WebSocket('ws://localhost:8000');
-
         const competitors = document.getElementById('competitors');
         const blueWInBox = document.getElementById('blueWInBox');
         const redWInBox = document.getElementById('redWInBox');
@@ -102,7 +99,6 @@
         const blueCheer = document.getElementById('blueCheer');
 
         const movementDistance = 3;
-        let competitorsPosition = 50; // Starting at 50% from the left
         let teamBlueStrength = 0;
         let teamRedStrength = 0;
 
