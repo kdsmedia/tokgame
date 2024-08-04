@@ -12,16 +12,17 @@ const wss = new WebSocket.Server({ server });
 // Gunakan port dari variabel lingkungan atau default ke 8000
 const port = process.env.PORT || 8000;
 
-app.use(express.static(path.join(__dirname + '/src')));
+// Pastikan path ke folder statis sesuai
+app.use(express.static(path.join(__dirname, 'public')));
 
 wss.on('connection', (ws) => {
-  console.log('Jogo ouvindo o websocket.');
+  console.log('WebSocket connection established.');
 
   const tiktokLiveConnection = new WebcastPushConnection(process.env.TIKTOK_USERNAME);
   tiktokLiveConnection.connect().then(state => {
-    console.info(`Escutando dados da live: ${state.roomId}`);
+    console.info(`Listening to live data: ${state.roomId}`);
   }).catch(err => {
-    console.error('Falha ao conectar', err);
+    console.error('Failed to connect:', err);
   });
 
   tiktokLiveConnection.on('chat', data => {
@@ -45,5 +46,5 @@ wss.on('connection', (ws) => {
 });
 
 server.listen(port, () => {
-  console.log(`Servidor está rodando em http://localhost:${port}`);
+  console.log(`Server running at http://localhost:${port}`);
 });
