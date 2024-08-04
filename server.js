@@ -9,7 +9,8 @@ const path = require('path');
 const server = http.createServer(app);
 const wss = new WebSocket.Server({ server });
 
-const port = 8000;
+// Gunakan port dari variabel lingkungan atau default ke 8000
+const port = process.env.PORT || 8000;
 
 app.use(express.static(path.join(__dirname + '/src')));
 
