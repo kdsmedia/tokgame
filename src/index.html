@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tug of War | By Sidhanie</title>
+  <!-- Link Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 40vh;
+      background-image: url('/assets/background.png');
+      background-size: cover !important;
+      background-repeat: no-repeat;
+    }
+
+    .competitors {
+      max-width: 100%;
+      max-height: 100%;
+      position: absolute;
+      top: 57%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 1;
+    }
+
+    .pool {
+      max-width: 100%;
+      max-height: 100%;
+      position: absolute;
+      top: 57%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .blueCheer {
+      max-width: 100%;
+      max-height: 100%;
+      position: absolute;
+      right: 0%;
+      bottom: -1%;
+      z-index: 1;
+    }
+
+    .redCheer {
+      max-width: 100%;
+      max-height: 100%;
+      position: absolute;
+      left: 0%;
+      bottom: -1%;
+      z-index: 1;
+    }
+
+    .blueWInBox {
+      position: absolute;
+      top: 12%;
+      height: 10%;
+      width: 10%;
+      left: 45%;
+      background-color: blue;
+      z-index: 1;
+      visibility: hidden;
+    }
+
+    .redWInBox {
+      position: absolute;
+      bottom: 0;
+      height: 10%;
+      width: 10%;
+      left: 45%;
+      background-color: red;
+      z-index: 1;
+      visibility: hidden;
+    }
+
+    /* Styling untuk tombol pengaturan dengan ikon gear tanpa background */
+    .settings-button {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: transparent;
+      color: #fff;
+      border: none;
+      border-radius: 50%;
+      padding: 10px;
+      cursor: pointer;
+      z-index: 2;
+      font-size: 24px;
+    }
+
+    .settings-button i {
+      font-size: 24px;
+    }
+
+    /* Styling untuk popup */
+    .popup {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+      z-index: 2;
+    }
+
+    .popup input {
+      margin-bottom: 10px;
+      padding: 5px;
+      width: 100%;
+    }
+
+    .popup button {
+      padding: 10px;
+      background-color: #333;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .popup button.close {
+      background-color: red;
+    }
+  </style>
+  <script src="/js/game.js"></script>
+</head>
+<body>
+  <div class="competitors" id="competitors">
+    <img src="/assets/competitors.png" alt="" height="400" width="50">
+  </div>
+
+  <div class="pool" id="pool">
+    <img src="/assets/pool.gif" alt="" height="130" width="100">
+  </div>
+
+  <div class="blueCheer" id="blueCheer">
+    <img src="/assets/blueCompetitor/blueCheer.gif" alt="" width="80" height="700">
+  </div>
+
+  <div class="redCheer" id="redCheer">
+    <img src="/assets/redCompetitor/redCheer.gif" alt="" width="80" height="700">
+  </div>
+
+  <div class="blueWInBox" id="blueWInBox"></div>
+  <div class="redWInBox" id="redWInBox"></div>
+
+  <!-- Tombol Pengaturan dengan ikon gear tanpa background -->
+  <button class="settings-button" id="settingsButton">
+    <i class="fas fa-cog"></i>
+  </button>
+
+  <!-- Popup Form -->
+  <div class="popup" id="settingsPopup">
+    <h2>Input Username</h2>
+    <input type="text" id="usernameInput" placeholder="Enter your username">
+    <button id="submitUsername">Submit</button>
+    <button class="close" id="closePopup">Close</button>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const settingsButton = document.getElementById('settingsButton');
+      const settingsPopup = document.getElementById('settingsPopup');
+      const closePopup = document.getElementById('closePopup');
+      const submitUsername = document.getElementById('submitUsername');
+      const usernameInput = document.getElementById('usernameInput');
+
+      settingsButton.addEventListener('click', function() {
+        settingsPopup.style.display = 'block';
+      });
+
+      closePopup.addEventListener('click', function() {
+        settingsPopup.style.display = 'none';
+      });
+
+      submitUsername.addEventListener('click', function() {
+        const username = usernameInput.value;
+        if (username) {
+          console.log('Username submitted:', username);
+          settingsPopup.style.display = 'none';
+        } else {
+          alert('Please enter a username.');
+        }
+      });
+    });
+  </script>
+</body>
+</html>
