@@ -2,46 +2,45 @@ const express = require('express');
 const http = require('http');
 const WebSocket = require('ws');
 const { WebcastPushConnection } = require('tiktok-live-connector');
-const path = require('path');
 
 const app = express();
+const path = require('path');
 const server = http.createServer(app);
 const wss = new WebSocket.Server({ server });
 
-// Gunakan PORT dari variabel lingkungan atau default ke 8000
-const port = process.env.PORT || 8000;
+require('dotenv').config();
 
-// Menyajikan file statis dari direktori src
-app.use(express.static(path.join(__dirname, '/src')));
+const port = 8000;
 
-// Menjalankan server HTTP dan WebSocket pada port yang sama
-server.listen(port, () => {
-  console.log(`Server berjalan di http://localhost:${port}`);
-  console.log('Server WebSocket aktif.');
+app.use(express.static(path.join(__dirname + '/src')));
+
+app.listen(port, () => {
+  console.log(`Servidor está rodando em http://localhost:${port}`);
 });
 
-// Membuat koneksi ke TikTok Live
-const tiktokLiveConnection = new WebcastPushConnection(''); // Ganti dengan username yang sesuai
 
-tiktokLiveConnection.connect().then(state => {
-  console.info(`Mendengarkan data live: ${state.roomId}`);
-}).catch(err => {
-  console.error('Gagal terhubung', err);
-});
-
-// Mengatur koneksi WebSocket
 wss.on('connection', (ws) => {
-  console.log('WebSocket terhubung.');
+  console.log('Jogo ouvindo o websocket.');
 
-  // Mengirimkan data chat dari TikTok Live ke klien WebSocket
-  tiktokLiveConnection.on('chat', data => {
-    data.type = 'chat';
-    ws.send(JSON.stringify(data));
-  });
+    tiktokLiveConnection = new WebcastPushConnection(process.env.TIKTOK_USERNAME);
+    tiktokLiveConnection.connect().then(state => {
+      console.info(`Escutando dados da live: ${state.roomId}`);
+    }).catch(err => {
+      console.error('Falha ao conectar', err);
+    });
 
-  // Mengirimkan data like dari TikTok Live ke klien WebSocket
-  tiktokLiveConnection.on('like', data => {
-    data.type = 'like';
-    ws.send(JSON.stringify(data));
-  });
+    tiktokLiveConnection.on('chat', data => {
+      data.type = 'chat';
+      ws.send(JSON.stringify(data));
+    });
+
+    tiktokLiveConnection.on('like', data => {
+      data.type = 'like';
+      ws.send(JSON.stringify(data));
+    });
+
+});
+
+server.listen(3000, () => {
+  console.log('Servidor WebSocket iniciado na porta 3000.');
 });
