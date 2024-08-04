@@ -13,7 +13,7 @@ const wss = new WebSocket.Server({ server });
 const port = process.env.PORT || 8000;
 
 // Pastikan path ke folder statis sesuai
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'src')));
 
 wss.on('connection', (ws) => {
   console.log('WebSocket connection established.');
